@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTwin AI — Personal Financial Twin</title>
+  <link rel="stylesheet" href="/static/styles.css?v=1.1.1" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">FT</div><div><strong>FinTwin AI</strong><span>Financial Decision Engine</span></div></div>
+      <nav>
+        <button type="button" class="nav active" data-target="dashboard">Overview</button>
+        <button type="button" class="nav" data-target="twin">My Financial Twin</button>
+        <button type="button" class="nav" data-target="simulator">What-if Simulator</button>
+        <button type="button" class="nav" data-target="advisor">AI Decision Engine</button>
+        <button type="button" class="nav" data-target="goals">Life Goals</button>
+        <button type="button" class="nav" data-target="riskProfile">Risk Intelligence</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="dot"></span> Hackathon demo mode
+        <small>Uses simulated market signals. No brokerage execution.</small>
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div><p class="eyebrow">PERSONALISED FINANCE</p><h1 id="hello">Your financial twin is ready.</h1></div>
+        <div class="pill">AI Twin <span>●</span> Active</div>
+      </header>
+
+      <section id="dashboard" class="view active-view">
+        <div class="hero-card">
+          <div><p class="eyebrow">YOUR FINANCIAL TWIN</p><h2>Don't invest according to the market.<br><em>Invest according to your life.</em></h2><p id="heroInsight">Loading your profile…</p></div>
+          <div class="health-ring"><div><strong id="healthScore">--</strong><span>/100</span><small>Financial Health</small></div></div>
+        </div>
+
+        <div class="stats" id="stats"></div>
+
+        <div class="grid two">
+          <div class="card"><div class="card-head"><div><p class="eyebrow">HEALTH BREAKDOWN</p><h3>Financial fitness</h3></div><span id="healthBadge" class="badge">Calculating</span></div><div id="healthBars"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">AI INSIGHTS</p><h3>What matters now</h3></div></div><div id="insights" class="insight-list"></div></div>
+        </div>
+
+        <div class="card"><div class="card-head"><div><p class="eyebrow">PORTFOLIO</p><h3>Tracked investments</h3></div><span class="badge muted">Demo prices</span></div><div class="table-wrap"><table><thead><tr><th>Asset</th><th>Sector</th><th>Qty</th><th>Avg price</th><th>Current</th><th>Value</th><th>P/L</th></tr></thead><tbody id="holdingsTable"></tbody></table></div></div>
+      </section>
+
+      <section id="twin" class="view">
+        <div class="section-title"><p class="eyebrow">PROFILE ENGINE</p><h2>Build your Financial Twin</h2><p>The recommendation layer changes when your life changes.</p></div>
+        <form id="profileForm" class="card form-grid">
+          <label>Name<input name="name" required></label>
+          <label>Age<input name="age" type="number" min="18" max="100" required></label>
+          <label>Monthly income (₹)<input name="monthly_income" type="number" min="0" required></label>
+          <label>Monthly expenses (₹)<input name="monthly_expenses" type="number" min="0" required></label>
+          <label>Liquid savings (₹)<input name="liquid_savings" type="number" min="0" required></label>
+          <label>Debt EMI (₹)<input name="debt_emi" type="number" min="0" required></label>
+          <label>Dependents<input name="dependents" type="number" min="0" required></label>
+          <label>
+  Risk tolerance
+  <select name="risk_tolerance">
+    <option value="low">Low</option>
+    <option value="moderate">Moderate</option>
+    <option value="high">High</option>
+  </select>
+  <small>Temporary setting. Your dynamic profile below will become the main risk assessment.</small>
+</label>
+          <label>Investment horizon (years)<input name="investment_horizon_years" type="number" min="1" max="50" required></label>
+          <div class="form-action"><button class="primary" type="submit">Update Financial Twin</button><span id="profileStatus"></span></div>
+        </form>
+      </section>
+      <section id="riskProfile" class="view">
+  <div class="section-title">
+    <p class="eyebrow">RISK INTELLIGENCE</p>
+    <h2>Discover your real risk profile</h2>
+    <p>FinTwin evaluates what risk you can afford, tolerate, and actually need.</p>
+  </div>
+
+  <form id="riskForm" class="card form-stack">
+
+    <label>
+      If your investment falls by 25%, what would you do?
+      <select name="market_drop_response" required>
+        <option value="sell">Sell immediately</option>
+        <option value="hold">Hold and wait</option>
+        <option value="buy_more">Invest more</option>
+      </select>
+    </label>
+
+    <label>
+      How stable is your monthly income?
+      <select name="income_stability" required>
+        <option value="stable">Highly stable</option>
+        <option value="moderate">Moderately stable</option>
+        <option value="variable">Variable</option>
+      </select>
+    </label>
+
+    <label>
+      When will you need most of this investment?
+      <select name="investment_horizon" required>
+        <option value="short">Within 1–2 years</option>
+        <option value="medium">3–5 years</option>
+        <option value="long">More than 5 years</option>
+      </select>
+    </label>
+
+    <label>
+      If your portfolio falls 15%, what would you do?
+      <select name="portfolio_drop_response" required>
+        <option value="reduce">Reduce my investments</option>
+        <option value="continue">Continue normally</option>
+        <option value="increase">Increase my investment</option>
+      </select>
+    </label>
+
+    <label>
+      What matters more to you?
+      <select name="wealth_priority" required>
+        <option value="preserve">Protect my existing wealth</option>
+        <option value="balanced">Balance growth and safety</option>
+        <option value="growth">Maximise long-term growth</option>
+      </select>
+    </label>
+
+    <button class="primary" type="submit">
+      Calculate My Risk Profile
+    </button>
+
+    <div id="riskResult" class="decision-card">
+      <p class="eyebrow">YOUR RISK PROFILE</p>
+      <div class="decision-placeholder">
+        Answer the questions to discover your profile.
+      </div>
+    </div>
+
+  </form>
+</section>
+      <section id="simulator" class="view">
+        <div class="section-title"><p class="eyebrow">SCENARIO LAB</p><h2>What if life changes?</h2><p>Stress-test your plan before the real world does.</p></div>
+        <div class="grid simulator-grid">
+          <form id="simForm" class="card form-stack">
+            <label>Monthly investment (₹)<input id="simMonthly" type="number" value="5000" min="0"></label>
+            <label>Projection years<input id="simYears" type="number" value="5" min="1" max="40"></label>
+            <label>Market crash at start (%)<input id="simCrash" type="range" value="25" min="0" max="60"><div class="range-value"><span>0%</span><strong id="crashLabel">25%</strong><span>60%</span></div></label>
+            <label>Job-loss period (months)<input id="simJob" type="range" value="6" min="0" max="18"><div class="range-value"><span>0</span><strong id="jobLabel">6 months</strong><span>18</span></div></label>
+            <button class="primary" type="submit">Run Financial Simulation</button>
+          </form>
+          <div class="card result-card"><p class="eyebrow">SIMULATION RESULT</p><div class="result-numbers"><div><span>Normal path</span><strong id="baseFinal">—</strong></div><div><span>Stress path</span><strong id="stressFinal">—</strong></div></div><div id="chart" class="chart"></div><p id="simSummary" class="muted-copy">Run a scenario to compare your baseline and stressed financial paths.</p></div>
+        </div>
+      </section>
+
+      <section id="advisor" class="view">
+        <div class="section-title"><p class="eyebrow">MULTI-FACTOR AI</p><h2>Decision Engine</h2><p>Same stock. Different person. Different decision.</p></div>
+        <div class="grid two">
+<div class="card form-stack">
+
+  <label>
+    Enter company name or stock symbol
+    <input
+      id="stockInput"
+      type="text"
+      placeholder="e.g. TCS, INFY, RELIANCE"
+      autocomplete="off"
+    >
+  </label>
+
+  <div class="quick-stocks">
+    <button type="button" data-stock="TCS">TCS</button>
+    <button type="button" data-stock="RELIANCE">RELIANCE</button>
+    <button type="button" data-stock="INFY">INFY</button>
+    <button type="button" data-stock="HDFCBANK">HDFC BANK</button>
+    <button type="button" data-stock="ICICIBANK">ICICI BANK</button>
+  </div>
+
+  <button id="analyzeBtn" type="button" class="primary">
+    Analyse for My Financial Twin
+  </button>
+
+  <div class="factor-note">
+    FinTwin combines market signals with your risk profile,
+    portfolio exposure, financial situation, and goals.
+  </div>
+
+</div>          <div class="card decision-card" id="decisionCard"><p class="eyebrow">CURRENT DECISION</p><div class="decision-placeholder">Select a stock and run the analysis.</div></div>
+        </div>
+      </section>
+
+      <section id="goals" class="view">
+        <div class="section-title"><p class="eyebrow">LIFE-FIRST INVESTING</p><h2>Goals, not tickers</h2><p>Your investments should serve the next version of your life.</p></div>
+        <div id="goalCards" class="goal-grid"></div>
+        <form id="goalForm" class="card goal-form"><input id="goalTitle" placeholder="Goal, e.g. Master's degree" required><input id="goalAmount" type="number" placeholder="Target ₹" required><input id="goalYears" type="number" step="0.5" placeholder="Years" required><select id="goalPriority"><option value="high">High priority</option><option value="medium">Medium priority</option><option value="low">Low priority</option></select><button class="primary" type="submit">Add Goal</button></form>
+      </section>
+
+
+      <footer>FinTwin AI is an educational hackathon prototype, not a SEBI-registered adviser and not financial advice. Market signals in this build are simulated.</footer>
+    </main>
+  </div>
+  <script src="/static/app.js?v=2.0.0"></script>
+</body>
+</html>
